@@ -1,5 +1,5 @@
-[submodule "fmauch_universal_robot"]
-	path = fmauch_universal_robot
+[submodule "universal_robot"]
+	path = universal_robot
 	url = https://github.com/ros-industrial/universal_robot.git
 
 [submodule "Universal_Robots_ROS_Driver"]
