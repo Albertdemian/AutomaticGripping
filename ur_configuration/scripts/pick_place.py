@@ -57,6 +57,7 @@ class GripOP(object):
     group_name = 'manipulator'
     move_group = moveit_commander.MoveGroupCommander(group_name)
     move_group.set_num_planning_attempts(5)
+    move_group.set_planning_time(10)
 
     #publisher to visualize planned trajectory 
     DisplayTraj = rospy.Publisher('/move_group/display_planned_path' ,
@@ -192,7 +193,7 @@ class GripOP(object):
   def pre_place_approach(self):
     place =self.place
     place.pre_place_approach.direction.header.frame_id=self.base_link
-    place.pre_place_approach.direction.vector.z = 1
+    place.pre_place_approach.direction.vector.y = 1
     place.pre_place_approach.desired_distance = 0.1
 
   def post_place_retreat(self):
@@ -222,9 +223,11 @@ class GripOP(object):
     move_group = self.move_group
     
     move_group.pick("box2", self.grasps, plan_only=False)
-    move_group.attach_object('box2')
+    rospy.sleep(0.5)
+    move_group.attach_object('box2', self.eef_link)
     
     move_group.place("box2", self.place, plan_only=False)
+    rospy.sleep(0.5)
     move_group.detach_object("box2")
 
 
@@ -243,9 +246,10 @@ def grip_and_place_demo():
 
 
     grip_operation.plan_grasp('gripbox', [0.3,-0.5,0.2],1)
-    rospy.sleep(1)
+    
     grip_operation.plan_place('placebox',[0, 0.5,0.7],1)
     print(grip_operation.place)
+    
     grip_operation.plan_path()
    
   except rospy.ROSInterruptException:
