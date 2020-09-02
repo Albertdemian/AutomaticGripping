@@ -76,14 +76,13 @@ class GripOP(object):
     self.DisplayTrajectory = DisplayTraj
     self.planning_frame = planning_frame
     self.eef_link = eef_link
-    self.group_names = groups
+    self.group_names = groups  #actuator groups that can be commanded by movit
 
     self.initial_pose = current_pose
     self.collision_objs =[]
-    self.grasps = moveit_msgs.msg.Grasp()
-    self.grasp_retreat = moveit_msgs.msg.Grasp()
-    self.place = moveit_msgs.msg.PlaceLocation()
-    self.base_link = 'base_link'
+    self.grasps = moveit_msgs.msg.Grasp()    #grasp message
+    self.place = moveit_msgs.msg.PlaceLocation()    #place message
+    self.base_link = 'base_link'     #reference frame link
 
   def _add_box(self,pose,orient=[0,0,0], size=(0.1,0.1,0.1),box_name = "box1", timeout=4):
     
@@ -149,7 +148,16 @@ class GripOP(object):
 
 
   def Grasp(self, pose, orientation, shift=0.1):
-    print("_________",pose)
+    '''
+    defines the grasp pose and orientation 
+    pose : list or tuble of desired grasp position [x,y,z]
+    orientation: list or tuble of desired orientation of eef link in rpy form (rx, ry, rz)
+    these poses are given relative to base frame
+    #=================
+    [TO BE MODIFIED]: currently function takes only position vector, orientation vector is just a dummy input for now
+    '''
+
+    
     grasp = self.grasps
 
     print(self.move_group.get_current_pose().pose)
@@ -169,6 +177,12 @@ class GripOP(object):
     grasp.grasp_pose = grasp_pose
 
   def pre_grasp_approach(self):
+    '''
+    Currently it assigns the approach direction to object in z axis
+    #==============
+    [TO BE MODIFIED]: later should consider a choice of multiple approach directions
+    '''
+
     grasp = self.grasps
     grasp.pre_grasp_approach.direction.header.frame_id = self.base_link
     grasp.pre_grasp_approach.direction.vector.z = -1
@@ -177,6 +191,11 @@ class GripOP(object):
 
 
   def post_grasp_retreat(self):
+    '''
+    Currently it assigns the retreat direction to object in z axis
+    #==============
+    [TO BE MODIFIED]: later should consider a choice of multiple retreat directions
+    '''
     grasp = self.grasps
     grasp.post_grasp_retreat.direction.header.frame_id = self.base_link
     grasp.post_grasp_retreat.direction.vector.z = 1
@@ -184,6 +203,17 @@ class GripOP(object):
 
 
   def place_pose(self, pose, orientation, shift=0.1): 
+
+    '''
+    defines the place pose and orientation 
+    pose : list or tuble of desired place position [x,y,z]
+    orientation: list or tuble of desired orientation of eef link in rpy form (rx, ry, rz)
+    these poses are given relative to base frame
+    #=================
+    [TO BE MODIFIED]: currently function takes only position vector, orientation vector is just a dummy input for now
+    '''
+
+
     place = self.place
     place.place_pose.header.frame_id = self.base_link
     place.place_pose.pose.position.x=pose[0]
@@ -191,12 +221,23 @@ class GripOP(object):
     place.place_pose.pose.position.z=pose[2] 
 
   def pre_place_approach(self):
+    '''
+    Currently it assigns the approach direction to object in z axis
+    #==============
+    [TO BE MODIFIED]: later should consider a choice of multiple approach directions
+    '''
+
     place =self.place
     place.pre_place_approach.direction.header.frame_id=self.base_link
     place.pre_place_approach.direction.vector.y = 1
     place.pre_place_approach.desired_distance = 0.1
 
   def post_place_retreat(self):
+    '''
+    Currently it assigns the retreat direction to object in z axis
+    #==============
+    [TO BE MODIFIED]: later should consider a choice of multiple retreat directions
+    '''
     place = self.place
     place.post_place_retreat.direction.header.frame_id = self.base_link
     place.post_place_retreat.direction.vector.z = 1
@@ -207,6 +248,9 @@ class GripOP(object):
   
 
   def plan_grasp(self, grasp_id, pose, orientation ):
+    '''
+    When called: assigns the values in grasp message to suit the target object
+    '''
     
     self.grasps.id = grasp_id
     self.Grasp(pose,1)
@@ -214,12 +258,22 @@ class GripOP(object):
     self.post_grasp_retreat()
   
   def plan_place(self, place_id ,pose, orientation):
+    '''
+    when called it assigns the values in place message to suit target location
+    '''
     self.place.id = place_id
     self.place_pose(pose, 1)
     self.pre_place_approach()
     self.post_place_retreat()
 
   def plan_path(self):
+    '''
+    Main function that plans whole grip-place operations
+
+    #=============
+    [TO BE MODIFIED]: Should parameterize object names 
+                      currently it has hard coded names but later should be taking object name as input to the function
+    '''
     move_group = self.move_group
     
     move_group.pick("box2", self.grasps, plan_only=False)
