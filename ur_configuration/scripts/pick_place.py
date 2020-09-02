@@ -56,6 +56,7 @@ class GripOP(object):
     # moveit move group name 
     group_name = 'manipulator'
     move_group = moveit_commander.MoveGroupCommander(group_name)
+    move_group.set_num_planning_attempts(5)
 
     #publisher to visualize planned trajectory 
     DisplayTraj = rospy.Publisher('/move_group/display_planned_path' ,
@@ -79,6 +80,7 @@ class GripOP(object):
     self.initial_pose = current_pose
     self.collision_objs =[]
     self.grasps = moveit_msgs.msg.Grasp()
+    self.grasp_retreat = moveit_msgs.msg.Grasp()
     self.place = moveit_msgs.msg.PlaceLocation()
     self.base_link = 'base_link'
 
@@ -191,11 +193,13 @@ class GripOP(object):
     place =self.place
     place.pre_place_approach.direction.header.frame_id=self.base_link
     place.pre_place_approach.direction.vector.z = 1
+    place.pre_place_approach.desired_distance = 0.1
 
   def post_place_retreat(self):
     place = self.place
     place.post_place_retreat.direction.header.frame_id = self.base_link
     place.post_place_retreat.direction.vector.z = 1
+    place.post_place_retreat.desired_distance = 0.2
 
 
 
@@ -208,35 +212,26 @@ class GripOP(object):
     self.pre_grasp_approach()
     self.post_grasp_retreat()
   
-  def plan_place(self, pose, orientation):
+  def plan_place(self, place_id ,pose, orientation):
+    self.place.id = place_id
     self.place_pose(pose, 1)
-    self.pre_grasp_approach()
+    self.pre_place_approach()
     self.post_place_retreat()
 
   def plan_path(self):
     move_group = self.move_group
     
-    r = 'r'
-    # while r == 'r':
-    move_group.pick("box1", self.grasps, plan_only=False)
+    move_group.pick("box2", self.grasps, plan_only=False)
     move_group.attach_object('box2')
-    print(self.place)
-    print('continue ..? ___')
-    r = raw_input()
     
     move_group.place("box2", self.place, plan_only=False)
     move_group.detach_object("box2")
-      
-    # move_group.pick("box1", self.grasps, plan_only=False)
-
-    print(self.scene.get_known_object_names())
-    print(self.scene.get_object_poses(['box2']))
 
 
     
 
 
-def main():
+def grip_and_place_demo():
   try:
     grip_operation = GripOP()
     box_pose = [0.5,0.5,0]
@@ -244,10 +239,13 @@ def main():
     grip_operation.add_collision_obj('plane', 'floor', pose=[0,0,0], dimensions = (0,0,1), orientation=1)
     # grip_operation.add_collision_obj('box', 'box1', pose=[0.5,0.1,-0.05],orientation=[0,0,pi/2], dimensions=[0.8,0.8,0.1] )
     grip_operation.add_collision_obj('box', 'box2', pose=[0.3,-0.5,0.1],orientation=[0,0,pi/2], dimensions=[0.1,0.1,0.1] )
+    rospy.sleep(0.1)
 
 
     grip_operation.plan_grasp('gripbox', [0.3,-0.5,0.2],1)
-    grip_operation.plan_place([0, -0.5,0.5],1)
+    rospy.sleep(1)
+    grip_operation.plan_place('placebox',[0, 0.5,0.7],1)
+    print(grip_operation.place)
     grip_operation.plan_path()
    
   except rospy.ROSInterruptException:
@@ -258,35 +256,12 @@ def main():
 
 
 
-def main2(): 
-  try:
-    r = ''
-    grip_operation = GripOP()
-      
-    while r != 'e':
-      robot_pose = grip_operation.move_group.get_current_pose()
-      print(robot_pose)
-      print("_____ input (e) to exit any time ____")
-      r = raw_input()
-      
-  except rospy.ROSInterruptException:
-    return
-  except KeyboardInterrupt:
-    return
+
 
 if __name__ == "__main__":
 
-  print("___ Do you want to try (G)ripping or moniter (P)osition? ____")
-  print("(g) or (p) ..? ")
-  prog = raw_input()
-
-  if prog == 'g' or prog == 'G':
-
-    main()
-
-  elif prog =='p' or prog == 'P': 
-    main2()
-
+  grip_and_place_demo()
+  
 
 
 
