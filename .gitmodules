@@ -1,0 +1,6 @@
+[submodule "dependencies/Universal_Robots_ROS_Driver"]
+	path = dependencies/Universal_Robots_ROS_Driver
+	url = https://github.com/Albertdemian/Universal_Robots_ROS_Driver.git
+[submodule "dependencies/universal_robot"]
+	path = dependencies/universal_robot
+	url = https://github.com/Albertdemian/universal_robot.git
