@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="two_finger_gripper" params="prefix">
+
+
+        
+        <joint name="grip_fix" type="fixed">
+            <origin xyz="0.0 0.0 0.03" rpy="0.0 0.0 0.0" />
+            <parent link="${prefix}tool0"/>
+            <child link="grip_body"/>
+            
+        </joint>
+        
+        <link name="grip_body">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.075"/>
+                <geometry>
+                    <box size="0.15 0.05 0.2"/>
+                </geometry>
+                <material name="yellow">
+                    <color rgba="1 1 0 1"/>
+                </material>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="0.067" ixy="0.0" ixz="0.0" iyy="0.067" iyz="0.0" izz="0.035"/>
+            </inertial>
+        </link>
+        
+        <link name="right_finger">
+            <visual>
+                <origin rpy="0 0 0" xyz="0.025 0 0.24"/>
+                <geometry>
+                    <box size="0.03 0.05 0.12"/>
+                </geometry>
+                <material name="yellow">
+                    <color rgba="1 1 0 1"/>
+                </material>
+
+                
+            </visual>
+        </link>
+
+        <joint name="slide_right" type="prismatic">
+            <origin xyz="0 0 0" rpy="0 0 0 "/>
+            <parent link= "grip_body"/>
+            <child link = "right_finger"/>
+            <axis xyz="1 0 0"/>
+            <limit effort="30" velocity="1.0" lower="0" upper="0.05" />
+        </joint>
+
+        <link name="left_finger">
+            <visual>
+                <origin rpy="0 0 0" xyz="-0.025 0 0.24"/>
+                <geometry>
+                    <box size="0.03 0.05 0.12"/>
+                </geometry>
+                <material name="yellow">
+                    <color rgba="1 1 0 1"/>
+                </material>
+
+                
+            </visual>
+        </link>
+
+        <joint name="slide_left" type="prismatic">
+            <origin xyz="0 0 0" rpy="0 0 0 "/>
+            <parent link= "grip_body"/>
+            <child link = "left_finger"/>
+            <axis xyz="-1 0 0"/>
+            <limit effort="30" velocity="1.0" lower="0" upper="0.05" />
+        </joint>
+
+    </xacro:macro>
+    
+</robot>
