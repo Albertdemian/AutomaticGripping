@@ -30,6 +30,14 @@
         <joint name="wrist_2_joint" value="0" />
         <joint name="wrist_3_joint" value="0" />
     </group_state>
+    <group_state name="open" group="two_finger_gripper">
+        <joint name="slide_left" value="0.05" />
+        <joint name="slide_right" value="0.05" />
+    </group_state>
+    <group_state name="close" group="two_finger_gripper">
+        <joint name="slide_left" value="0" />
+        <joint name="slide_right" value="0" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper" parent_link="tool0" group="two_finger_gripper" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->

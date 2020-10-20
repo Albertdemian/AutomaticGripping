@@ -6,16 +6,18 @@
     <arg name="kinematics_config" default="$(find ur_configuration)/kinematic_config/kinematics_config.yaml"/>
     <arg name="limited" default="true"/>
     <arg name="config" default="true"/>
+    <arg name="use_tool_communication" default="true" />
     
     <!-- launch controller interface--> 
     <include file="$(find ur_robot_driver)/launch/ur10e_bringup.launch" >
         <arg name="robot_ip" value="$(arg robot_ip)"/>
         <arg name="kinematics_config" value="$(arg kinematics_config)"/>
+        <arg name= "use_tool_communication" value="$(arg use_tool_communication)" />
     </include>
     
     <!-- launch moveit planning execution-->
-    <include file="$(find ur10_e_moveit_config)/launch/ur10_e_moveit_planning_execution.launch">
-        <arg name="limited" value="$(arg limited)"/>
+    <include file="$(find ur10e_wg_moveit_config)/launch/move_group.launch">
+        <!--arg name="limited" value="$(arg limited)"/-->
     </include>
 
     <!-- launch moveit visualization RVIZ-->

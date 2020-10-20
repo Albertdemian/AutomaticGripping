@@ -36,9 +36,9 @@ controller_list:
       - wrist_2_joint
       - wrist_3_joint
   - name: two_finger_gripper_controller
-    action_ns: follow_joint_trajectory
+    action_ns: gripper_action
     default: True
-    type: FollowJointTrajectory
+    type: GripperCommand
     joints:
       - slide_left
       - slide_right

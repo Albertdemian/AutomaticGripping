@@ -7,7 +7,7 @@
     <arg name="limited" default="true"/>
     <arg name="config" default="true"/>
     <arg name="sim" default="true"/>
-    <arg name="gui" default="false"/>
+    <arg name="gui" default="true"/>
     
     <include file="$(find ur_gazebo)/launch/ur10.launch">
         <arg name="gui" value="$(arg gui)"/>
