@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="transmission_hw_interface" value="hardware_interface/PositionJointInterface"/>
+    <arg name="prefix" value=""/>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" default="worlds/empty.world"/>
+        <arg name="paused" value="false"/>
+        <arg name="gui" value="true"/>
+    </include>
+
+    <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find ur_configuration)/urdf/grip.urdf.xacro'
+      prefix:=$(arg prefix)"
+    />
+
+    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -z 0.1" respawn="false" output="screen" />
+
+    
+</launch>

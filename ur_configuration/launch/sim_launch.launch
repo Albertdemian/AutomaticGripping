@@ -3,26 +3,31 @@
 
 <launch>
     
-    <arg name="kinematics_config" default="$(find ur_configuration)/my_config.yaml"/>
+    <arg name="kinematics_config" default="$(find ur_configuration)/ur10_e.yaml"/>
     <arg name="limited" default="true"/>
     <arg name="config" default="true"/>
     <arg name="sim" default="true"/>
     <arg name="gui" default="true"/>
+    <arg name="fake_execution" default="false"/>
+    <arg name="debug" default="false" />
     
-    <include file="$(find ur_gazebo)/launch/ur10.launch">
-        <arg name="gui" value="$(arg gui)"/>
+    <include file="$(find ur10e_wg_gazebo)/launch/ur10_wg_gazebo.launch">
+       
     </include>
         
     
     <!-- launch moveit planning execution-->
-    <include file="$(find ur10_e_moveit_config)/launch/ur10_e_moveit_planning_execution.launch">
-        <arg name="limited" value="$(arg limited)"/>
-        <arg name="sim" value="$(arg sim)"/>
+    <!--remap from="arm_trajectory_controller/follow_joint_trajectory" to="arm_controller/follow_joint_trajectory" /-->
+    <include file="$(find ur10e_grip_moveit_config)/launch/move_group.launch">
+        
+        <arg name="fake_execution" value="$(arg fake_execution)"/>
+        <arg name="allow_trajectory_execution" value="true" />
+       
     </include>
 
     <!-- launch moveit visualization RVIZ-->
-    <include file="$(find ur10_e_moveit_config)/launch/moveit_rviz.launch">
-        <arg name="config" value="$(arg config)"/>
-    </include>
-
+    <include file="$(find ur10e_grip_moveit_config)/launch/moveit_rviz.launch">
+        <arg name="rviz_config" value="$(find ur10e_grip_moveit_config)/launch/moveit.rviz"/>
+        <arg name="debug" value="$(arg debug)"/>
+  </include>
 </launch>

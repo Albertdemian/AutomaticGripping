@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="twofingergripper">
+    <xacro:include filename="$(find gripper_pkg)/urdf/grip.urdf.xacro" />
+    <xacro:include filename="$(find gripper_pkg)/urdf/grip_transmission.urdf.xacro" />
+    <xacro:include filename="$(find gripper_pkg)/urdf/gazebo.urdf.xacro" />
+    <xacro:include filename="$(find gripper_pkg)/urdf/gripper_gazebo.urdf.xacro"/>
+
+    <xacro:two_finger_gripper prefix=""/> 
+
+    <xacro:transmission_ext /> 
+    <xacro:gripper_gazebo_elm />
+
+</robot>
