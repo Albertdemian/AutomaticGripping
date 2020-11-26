@@ -52,6 +52,8 @@
   <build_depend>ur_robot_driver</build_depend>
   <build_export_depend>ur_robot_driver</build_export_depend>
   <exec_depend>ur_robot_driver</exec_depend>
+  <build_depend>octomap</build_depend>
+  <exec_depend>octomap</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

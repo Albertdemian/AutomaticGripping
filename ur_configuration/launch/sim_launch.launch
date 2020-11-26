@@ -7,9 +7,13 @@
     <arg name="limited" default="true"/>
     <arg name="config" default="true"/>
     <arg name="sim" default="true"/>
+    <arg name="sim_time" default="true"/>
+
     <arg name="gui" default="true"/>
     <arg name="fake_execution" default="false"/>
     <arg name="debug" default="false" />
+    
+
     
     <include file="$(find ur10e_wg_gazebo)/launch/ur10_wg_gazebo.launch">
        
@@ -25,9 +29,19 @@
        
     </include>
 
+    <include file="$(find ur_configuration)/launch/launch_point_cloud.launch"/>
+    
     <!-- launch moveit visualization RVIZ-->
     <include file="$(find ur10e_grip_moveit_config)/launch/moveit_rviz.launch">
         <arg name="rviz_config" value="$(find ur10e_grip_moveit_config)/launch/moveit.rviz"/>
         <arg name="debug" value="$(arg debug)"/>
-  </include>
+    </include>
+
+    
+
+    
+   
+    
+
+
 </launch>
