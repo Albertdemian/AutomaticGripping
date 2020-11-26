@@ -37,14 +37,11 @@ sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
 
 * **Octomap :**
 ```bash
-sudo apt-get install ros-$ROS_DISTRO-octomap
+sudo apt-get install ros-$ROS_DISTRO-octomap*
 ```
 or follow instructions [here](https://wiki.ros.org/octomap)
 
-* **Octomap Server :** 
-```bash
-sudo apt-get install ros-$ROS_DISTRO-octomap-server
-``` 
+
 ### To use simulation make sure to install Gazebo: 
 Instructions to install gazebo [here](http://gazebosim.org/tutorials?cat=guided_b&tut=guided_b1)
 
@@ -53,8 +50,60 @@ Instructions to install gazebo [here](http://gazebosim.org/tutorials?cat=guided_
 ---
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
 
+1. Create Catkin workspace  or got to src/ forlder in your workspace.\
+- To create [catkin](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) work space: \
+source enviroment: 
+```bash
+source /opt/ros/noetic/setup.bash
+```
+- create catkin ws:
+```bash
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/
+catkin_make
+```
+- source environment: 
+```bash
+source devel/setup.bash
+```
+
+2. Clone the repository into your local machine: 
+```bash
+git clone $link_to_repo .
+```
+
+3. If you will use hardware, make sure to follow instalation instructions of UR10e Robot Ros Driver written in package's own [README](dependencies/Universal_Robots_ROS_Driver/README.md) file\.
+
+4. make sure to install URCap on UR robot controller\.
+    - If your're using r-series robot go to this [tutorial](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_e_series.md)
+    - If you're using different series, go to this [tutorial](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_cb3.md)
+
+# Usage
+
+### To launch whole program: 
+* connect to the robot using ethernet cable
+* connect realsense camera (if you have one)
+* source your ws: 
+```bash
+cd catkin_ws/
+```
+* launch program 
+```bash 
+roslaunch ur_configuration launch_prog.launch robot_ip:="$robot_IP" use_camera:="true" 
+```
+* if you don't have camera set parameter "use_camera" to false\.
+* you can also create a launch file and pass all the arguments you want to the program launch file:
+```bash
+ur_configuration/launch/launch_prog.launch
+```
+
+* If you want to use only simulation of Gazebo with Moveit: 
+```bash
+roslaunch ur_configuration sim_launch.launch
+```
+
+**To know how to use each package, Read its own documentation for details**
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
 
