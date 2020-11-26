@@ -7,22 +7,31 @@
     <arg name="limited" default="true"/>
     <arg name="config" default="true"/>
     <arg name="use_tool_communication" default="true" />
+    <arg name="use_camera" default="true"/>
+
+    
     
     <!-- launch controller interface--> 
     <include file="$(find ur_robot_driver)/launch/ur10e_bringup.launch" >
         <arg name="robot_ip" value="$(arg robot_ip)"/>
         <arg name="kinematics_config" value="$(arg kinematics_config)"/>
         <arg name= "use_tool_communication" value="$(arg use_tool_communication)" />
+        <arg name= "tool_voltage" value="24.0" />
     </include>
     
     <!-- launch moveit planning execution-->
-    <include file="$(find ur10e_wg_moveit_config)/launch/move_group.launch">
+    <remap from="arm_controller/follow_joint_trajectory" to="scaled_pos_joint_traj_controller/follow_joint_trajectory"/>
+    <include file="$(find ur10e_grip_moveit_config)/launch/move_group.launch">
         <!--arg name="limited" value="$(arg limited)"/-->
     </include>
 
+    <group if="$(arg use_camera)">
+    <include file="$(find ur_configuration)/launch/launch_point_cloud.launch"/>
+    </group>
+
     <!-- launch moveit visualization RVIZ-->
-    <include file="$(find ur10_e_moveit_config)/launch/moveit_rviz.launch">
-        <arg name="config" value="$(arg config)"/>
+    <include file="$(find ur10e_grip_moveit_config)/launch/moveit_rviz.launch">
+        <arg name="rviz_config" value="$(arg config)"/>
     </include>
 
 </launch>

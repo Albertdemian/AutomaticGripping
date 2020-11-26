@@ -54,7 +54,7 @@ class GripOP(object):
     scene = moveit_commander.PlanningSceneInterface()
 
     # moveit move group name 
-    group_name = 'ur10e_arm'
+    group_name = 'arm'
     move_group = moveit_commander.MoveGroupCommander(group_name)
     move_group.set_num_planning_attempts(5)
     move_group.set_planning_time(10)
@@ -82,7 +82,7 @@ class GripOP(object):
     self.collision_objs =[]
     self.grasps = moveit_msgs.msg.Grasp()    #grasp message
     self.place = moveit_msgs.msg.PlaceLocation()    #place message
-    self.base_link = 'world'     #reference frame link
+    self.base_link = 'base_link'     #reference frame link
 
   def _add_box(self,pose,orient=[0,0,0], size=(0.1,0.1,0.1),box_name = "box1", timeout=4):
     
@@ -162,7 +162,7 @@ class GripOP(object):
 
     print(self.move_group.get_current_pose().pose)
     
-    orientation = tf.transformations.quaternion_from_euler(pi/2,pi/2,-pi/4,'sxyz')
+    orientation = tf.transformations.quaternion_from_euler(0,pi/2,0,'sxyz')
     print('orien', orientation)
     grasp_pose = geometry_msgs.msg.PoseStamped()
     grasp_pose.header.frame_id = self.base_link
@@ -275,6 +275,7 @@ class GripOP(object):
                       currently it has hard coded names but later should be taking object name as input to the function
     '''
     move_group = self.move_group
+    print(move_group.get_end_effector_link())
     
     move_group.pick("box2", self.grasps, plan_only=False)
     rospy.sleep(0.5)
@@ -290,6 +291,7 @@ class GripOP(object):
 
 def grip_and_place_demo():
   try:
+    
     grip_operation = GripOP()
     box_pose = [0.5,0.5,0]
     # add_box(box_pose grip_operation.scene)
@@ -299,7 +301,7 @@ def grip_and_place_demo():
     rospy.sleep(0.1)
 
 
-    grip_operation.plan_grasp('gripbox', [0.3,-0.5,0.2],1)
+    grip_operation.plan_grasp('gripbox', [0.3,-0.5,0.4],1)
     
     # grip_operation.plan_place('placebox',[0, 0.5,0.7],1)
     # print(grip_operation.place)

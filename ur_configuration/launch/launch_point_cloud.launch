@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- publish transformation from gripper link to camera link-->
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0.1 0.05 0 -1.57 -1.57  grip_body camera_link 100" />
+
+    <!-- launch camera sensor and pass desired arguments -->
+    <include file="$(find realsense2_camera)/launch/rs_aligned_depth.launch">
+        <arg name="json_file_path" value= "$(find ur_configuration)/point_cloud_configs/test.json"/>
+    </include>
+
+    <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+		<param name="resolution" value="0.05" />
+		
+		<!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
+		<param name="frame_id" type="string" value="world" />
+		
+		<!-- maximum range to integrate (speedup!) -->
+		<param name="sensor_model/max_range" value="2.0" />
+		
+		<!-- data source to integrate (PointCloud2) -->
+		<remap from="cloud_in" to="/camera/depth/color/points" />
+	
+	</node>
+</launch>

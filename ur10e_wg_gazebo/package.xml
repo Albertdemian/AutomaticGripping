@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>ur_configuration</name>
+  <name>ur10e_wg_gazebo</name>
   <version>0.0.0</version>
-  <description>package contains configuration info of robots</description>
+  <description>The ur10e_wg_gazebo package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/ur_configuration</url> -->
+  <!-- <url type="website">http://wiki.ros.org/ur10e_wg_gazebo</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -49,11 +49,15 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>ur_robot_driver</build_depend>
-  <build_export_depend>ur_robot_driver</build_export_depend>
-  <exec_depend>ur_robot_driver</exec_depend>
-  <build_depend>octomap</build_depend>
-  <exec_depend>octomap</exec_depend>
+  <build_depend>controller_manager</build_depend>
+  <build_depend>joint_state_controller</build_depend>
+  <build_depend>robot_state_publisher</build_depend>
+  <build_export_depend>controller_manager</build_export_depend>
+  <build_export_depend>joint_state_controller</build_export_depend>
+  <build_export_depend>robot_state_publisher</build_export_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

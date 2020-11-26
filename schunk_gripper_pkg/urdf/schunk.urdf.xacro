@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="schunk_gripper">
+
+    <xacro:macro name="schunk" params="prefix mesh_folder">
+
+        
+        <link name="grip_body">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.075"/>
+                <geometry>
+                    <!--mesh filename="package://${mesh_folder}/grip_body.stl" scale="1.0"/-->
+                    <mesh filename="package://schunk_gripper_pkg/meshes/MeshBody1.stl"/>
+                </geometry>
+                <material name="yellow">
+                    <color rgba="1 1 0 1"/>
+                </material>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="0.067" ixy="0.0" ixz="0.0" iyy="0.067" iyz="0.0" izz="0.035"/>
+            </inertial>
+            <collision>
+                <origin xyz="0 0 -0.12" rpy="0 0 0"/>
+                <geometry>
+                <mesh filename="package://schunk_gripper_pkg/meshes/MeshBody1.stl"/>
+                </geometry>
+            </collision>
+        </link>
+        
+        <link name="right_finger">
+            <visual>
+                <origin rpy="0 0 0" xyz="0.025 0 0.24"/>
+                <geometry>
+                    <mesh filename="package://${mesh_folder}/right_finger.stl" scale="1.0"/>
+                </geometry>
+                <material name="yellow">
+                    <color rgba="1 1 0 1"/>
+                </material>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="0.0067" ixy="0.0" ixz="0.0" iyy="0.0067" iyz="0.0" izz="0.0035"/>
+            </inertial>
+            <collision>
+                <origin xyz="0 0 -0.12" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://${mesh_folder}/right_finger.stl" scale="1.0"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="slide_right" type="prismatic">
+            <origin xyz="1 0 2" rpy="0 0 0 "/>
+            <parent link= "grip_body"/>
+            <child link = "right_finger"/>
+            <axis xyz="1 0 0"/>
+            <limit effort="30" velocity="1.0" lower="0" upper="0.05" />
+            <dynamics damping="0.0" friction="0.0"/>
+        </joint>
+
+        <link name="left_finger">
+            <visual>
+                <origin rpy="0 0 0" xyz="-0.025 0 0.24"/>
+                <geometry>
+                    <mesh filename="package://${mesh_folder}/left_finger.stl" scale="1.0"/>
+                </geometry>
+                <material name="yellow">
+                    <color rgba="1 1 0 1"/>
+                </material>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="0.0067" ixy="0.0" ixz="0.0" iyy="0.0067" iyz="0.0" izz="0.0035"/>
+            </inertial>
+            <collision>
+                <origin xyz="0 0 -0.12" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://${mesh_folder}/left_finger.stl" scale="1.0"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="slide_left" type="prismatic">
+            <origin xyz="-1 0 2" rpy="0 0 0 "/>
+            <parent link= "grip_body"/>
+            <child link = "left_finger"/>
+            <axis xyz="-1 0 0"/>
+            <limit effort="30" velocity="1.0" lower="0" upper="0.05" />
+            <dynamics damping="0.0" friction="0.0"/>
+        </joint>
+
+    </xacro:macro>
+    
+</robot>

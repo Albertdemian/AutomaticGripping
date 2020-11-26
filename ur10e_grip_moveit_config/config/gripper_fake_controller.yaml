@@ -1,0 +1,8 @@
+controller_list:
+  - name: fake_hand_controller
+    joints:
+      - slide_left
+      - slide_right
+initial:  # Define initial robot poses.
+  - group: hand
+    pose: gripper_closed

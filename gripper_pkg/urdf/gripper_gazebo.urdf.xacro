@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    
+    <xacro:macro name="gripper_gazebo_elm">
+        <gazebo reference="grip_body">
+            <selfCollide>true</selfCollide>
+            <material>Gazebo/Orange</material>
+        </gazebo>
+
+        <gazebo reference="right_finger">
+            <selfCollide>true</selfCollide>
+            <material>Gazebo/Black</material>
+        </gazebo>
+
+        <gazebo reference="left_finger">
+            <selfCollide>true</selfCollide>
+            <material>Gazebo/Black</material>
+        </gazebo>
+    </xacro:macro>
+    
+</robot>
