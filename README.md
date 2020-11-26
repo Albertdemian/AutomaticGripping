@@ -13,6 +13,7 @@ Using MoveIt, gripping planning pipeline is implemented to grasp and place detec
 **Depth camera module :** Intel Realsense D435 \
 **Depth map:** Octomap
 
+---
 # Getting Started
 
 This pipeline is built and tested on **ROS Melodic** other versions are not tested but theoritically, it should work properly\.
@@ -38,7 +39,6 @@ sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
 ```bash
 sudo apt-get install ros-$ROS_DISTRO-octomap
 ```
-
 or follow instructions [here](https://wiki.ros.org/octomap)
 
 * **Octomap Server :** 
@@ -50,12 +50,7 @@ Instructions to install gazebo [here](http://gazebosim.org/tutorials?cat=guided_
 
 > **Note :** Depth camera module is not yet implemented for simulation on gazebo. Only moveit pipeline for motion planning. 
 
-
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+---
 
 # Build and Test
 TODO: Describe and show how to build your code and run the tests. 
