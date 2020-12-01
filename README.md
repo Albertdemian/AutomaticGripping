@@ -55,7 +55,7 @@ Instructions to install gazebo [here](http://gazebosim.org/tutorials?cat=guided_
 - To create [catkin](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) work space: \
 source enviroment: 
 ```bash
-source /opt/ros/noetic/setup.bash
+source /opt/ros/melodic/setup.bash
 ```
 - create catkin ws:
 ```bash
@@ -78,6 +78,11 @@ git clone $link_to_repo .
 4. make sure to install URCap on UR robot controller\.
     - If your're using r-series robot go to this [tutorial](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_e_series.md)
     - If you're using different series, go to this [tutorial](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_cb3.md)
+
+5. Run 
+```bash
+catkin_make
+```
 
 # Usage
 
