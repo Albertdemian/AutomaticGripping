@@ -23,8 +23,6 @@ This pipeline is built and tested on **ROS Melodic** other versions are not test
 * **ROS**:  
 Follow this [link](http://wiki.ros.org/melodic/Installation/Ubuntu) to install ROS
 
-* **Catkin**:  
-Install [here](http://wiki.ros.org/catkin/)
 
 * **MoveIt:**  
 ```bash
