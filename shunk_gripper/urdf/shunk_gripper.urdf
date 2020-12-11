@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="shunk_gripper">
+  <link name="base_frame">
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </link>
+  <link
+    name="base_link">
+    <!-- <inertial>
+      <origin
+        xyz="-0.048896928882092 0.00691197886011368 0.0678583065401096"
+        rpy="0 0 0" />
+      <mass
+        value="0.0576318423435791" />
+      <inertia
+        ixx="1.86470358297814E-05"
+        ixy="3.09841340427983E-14"
+        ixz="-1.62139628968372E-08"
+        iyy="3.97320607331134E-05"
+        iyz="1.25117671340888E-16"
+        izz="2.30706114164657E-05" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/base_link.STL" />
+      </geometry>
+    </collision> -->
+  </link>
+   <joint name="gripper_origin" type="fixed">
+    <parent link="base_frame"/>
+    <child link="base_link"/>
+    <origin xyz="0.048897 0.067858 0.0" rpy="0.0 0.0 0.0"/>
+    
+  </joint>
+  <link
+    name="grip_body">
+    <inertial>
+      <origin
+        xyz="-8.68295533725111E-05 0.0467641073615058 -0.000116431180590112"
+        rpy="0 0 0" />
+      <mass
+        value="0.361330864537367" />
+      <inertia
+        ixx="0.000332917529789348"
+        ixy="-3.82571975355155E-07"
+        ixz="1.34213019396549E-07"
+        iyy="0.000332256714402802"
+        iyz="1.19223396964052E-06"
+        izz="0.000554926814710473" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/grip_body.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/grip_body.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="grip_base"
+    type="fixed">
+    <origin
+      xyz="-0.048897 -0.067858 0.0148"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="grip_body" />
+    <axis
+      xyz="0 0 0" />
+    <dynamics
+      damping="0"
+      friction="0" />
+  </joint>
+  <link
+    name="camera_holder">
+    <inertial>
+      <origin
+        xyz="6.46106293467064E-10 0.088046407440869 -0.0391184966748455"
+        rpy="0 0 0" />
+      <mass
+        value="0.0144943158022944" />
+      <inertia
+        ixx="6.31922737480024E-06"
+        ixy="-2.75191388754803E-14"
+        ixz="-9.4625109217647E-14"
+        iyy="9.00661195812767E-06"
+        iyz="3.21717282411001E-07"
+        izz="3.59085835556102E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/camera_holder.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/camera_holder.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_base_hold"
+    type="fixed">
+    <origin
+      xyz="0 -0.01665 -0.00355"
+      rpy="0 0 0" />
+    <parent
+      link="grip_body" />
+    <child
+      link="camera_holder" />
+    <axis
+      xyz="0 0 0" />
+    <dynamics
+      damping="0"
+      friction="0" />
+  </joint>
+  <link
+    name="camera">
+    <inertial>
+      <origin
+        xyz="1.34361627268653E-07 0.00153732212526675 0.0125484922794181"
+        rpy="0 0 0" />
+      <mass
+        value="0.0479412438493774" />
+      <inertia
+        ixx="3.34773593966692E-06"
+        ixy="4.26032363849028E-07"
+        ixz="-2.31631732591368E-09"
+        iyy="2.7386926976946E-05"
+        iyz="7.53570140196947E-09"
+        izz="2.66453338827626E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/camera.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/camera.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_mount"
+    type="fixed">
+    <origin
+      xyz="0 0.09265 -0.072309"
+      rpy="3.1416 0 3.1416" />
+    <parent
+      link="camera_holder" />
+    <child
+      link="camera" />
+    <axis
+      xyz="0 0 0" />
+    <dynamics
+      damping="0"
+      friction="0" />
+  </joint>
+  <link
+    name="left_finger_base">
+    <inertial>
+      <origin
+        xyz="0.0192055090434855 0.0094557334604822 1.42555411919432E-12"
+        rpy="0 0 0" />
+      <mass
+        value="0.0125834070848798" />
+      <inertia
+        ixx="7.37198350739966E-07"
+        ixy="2.78745742331218E-08"
+        ixz="-2.57532877946112E-16"
+        iyy="1.89504157499018E-06"
+        iyz="1.54901113547076E-16"
+        izz="1.94410993291815E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/left_finger_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/left_finger_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_slider"
+    type="prismatic">
+    <origin
+      xyz="0.0395 0.08225 0"
+      rpy="3.1416 0 3.1416" />
+    <parent
+      link="grip_body" />
+    <child
+      link="left_finger_base" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.04"
+      upper="0"
+      effort="30"
+      velocity="1.0" />
+    <dynamics
+      damping="0"
+      friction="0" />
+  </joint>
+  <link
+    name="left_finger">
+    <inertial>
+      <origin
+        xyz="0.0502008287439572 0.146475875110397 -8.21620549373847E-13"
+        rpy="0 0 0" />
+      <mass
+        value="0.0167372132053273" />
+      <inertia
+        ixx="5.89412760310316E-06"
+        ixy="-1.39403449769578E-06"
+        ixz="-4.73189036164482E-12"
+        iyy="2.60646551970119E-06"
+        iyz="-1.88830086429151E-16"
+        izz="7.89098623503947E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/left_finger.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/left_finger.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lfinger_mount"
+    type="fixed">
+    <origin
+      xyz="0.0398 -0.10507 0"
+      rpy="3.1416 0 3.1416" />
+    <parent
+      link="left_finger_base" />
+    <child
+      link="left_finger" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_finger_base">
+    <inertial>
+      <origin
+        xyz="0.0192055090434855 0.0094557334604822 1.42555411919432E-12"
+        rpy="0 0 0" />
+      <mass
+        value="0.0125834070848798" />
+      <inertia
+        ixx="7.37198350739967E-07"
+        ixy="2.78745742331223E-08"
+        ixz="-2.57529096873753E-16"
+        iyy="1.89504157499019E-06"
+        iyz="1.54901698262266E-16"
+        izz="1.94410993291815E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/right_finger_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/right_finger_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_slider"
+    type="prismatic">
+    <origin
+      xyz="-0.0395 0.08225 0"
+      rpy="0 0 0" />
+    <parent
+      link="grip_body" />
+    <child
+      link="right_finger_base" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.04"
+      upper="0"
+      effort="30"
+      velocity="1.0" />
+    <dynamics
+      damping="0"
+      friction="0" />
+  </joint>
+  <link
+    name="right_finger">
+    <inertial>
+      <origin
+        xyz="0.0496008283624874 0.146475875110399 -8.22841794700935E-13"
+        rpy="0 0 0" />
+      <mass
+        value="0.0167372132053273" />
+      <inertia
+        ixx="5.89412760310315E-06"
+        ixy="-1.39403449769578E-06"
+        ixz="-4.73189036217964E-12"
+        iyy="2.60646551970119E-06"
+        iyz="-1.88831163534259E-16"
+        izz="7.89098623503947E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/right_finger.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://shunk_gripper/meshes/right_finger.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rfinger_mount"
+    type="fixed">
+    <origin
+      xyz="0.0391999998092651 -0.105069997787476 0"
+      rpy="3.14159265358978 0 3.14159265358979" />
+    <parent
+      link="right_finger_base" />
+    <child
+      link="right_finger" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
